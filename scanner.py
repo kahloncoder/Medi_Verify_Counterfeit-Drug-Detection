@@ -191,10 +191,11 @@ def hybrid_scanner(api_key):
     return None
 
 if __name__ == "__main__":
-    API_KEY = "AIzaSyCDYPT6uAPYnW8ClZO7YgrT-R4BYIWGS_Q"
+    API_KEY = "YOUR_API_KEY"
     
     if API_KEY == "YOUR_API_KEY":
         print("Please replace 'YOUR_API_KEY' with your actual Gemini API key.")
     else:
         hybrid_scanner(API_KEY)
     
+
