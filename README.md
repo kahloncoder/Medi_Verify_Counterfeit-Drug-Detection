@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Pranav-Marwaha-73/Medi_Verify_Counterfeit-Drug-Detection/main/logo.png" alt="Medi-Verify Logo" width="150">
-</p>
-
 # Medi-Verify: Counterfeit Drug Detection
 
 <p align="center">
@@ -45,12 +41,42 @@ This process ensures that every stakeholder—from the manufacturer to the end c
 
 ---
 
-## 📸 Screenshots
+## 📸 Project Showcase
 
-*(Here you can add screenshots of your application. Replace the placeholder links with your actual image URLs.)*
+This section provides a visual walkthrough of the Medi-Verify application, from the user-facing interface to the backend components.
 
-**Verification Result:**
-![Verification Result](https://raw.githubusercontent.com/Pranav-Marwaha-73/Medi_Verify_Counterfeit-Drug-Detection/main/Verification-Result.png)
+### 1. The User Verification Flow
+The core journey for a consumer or pharmacist is simple and intuitive.
+
+**The Scanning Dashboard**
+*The main dashboard where users can scan a product's QR code to begin the verification process.*
+![Dashboard image preview for scanning](https://github.com/user-attachments/assets/0dfc43ec-0b81-4b4a-a0e1-13d1122e3033)
+
+**Verification Results**
+*After a successful scan, the system displays the full, verified details of the medicine, confirming its authenticity.*
+![Dashboard showing verification results](https://github.com/user-attachments/assets/69abb4f4-150d-474f-8887-f9a01206fb1b)
+
+### 2. Admin Portal & Data Management
+The application provides powerful tools for administrators to manage the supply chain.
+
+**Admin Dashboard**
+*The admin portal provides a comprehensive overview of all medicines registered in the system.*
+![Dashboard showing Admin portal](https://github.com/user-attachments/assets/764fea6f-2eb1-4e69-9367-95c4d2a3f520)
+
+**Transaction History**
+*A detailed, immutable log of all verification transactions is available for auditing and tracking purposes.*
+![Dashboard showing Transaction history](https://github.com/user-attachments/assets/d2814506-9642-46f8-b208-2bc2597290a4)
+
+### 3. Behind the Scenes: The Technology
+A look at the backend components that power Medi-Verify's secure and decentralized architecture.
+
+**Candid UI for the ICP Canister (Backend)**
+*The Candid UI provides a direct interface to interact with the functions on our Internet Computer canister, which holds the secure, on-chain data.*
+![Candid UI for the ICP Canister](https://github.com/user-attachments/assets/53569ce3-b19f-4945-bacd-ab129f3e6987)
+
+**FastAPI Backend Documentation**
+*The auto-generated documentation for our FastAPI backend, which handles API requests and communicates with the blockchain.*
+![Fast API backend documentation](https://github.com/user-attachments/assets/5f745083-d8e0-4973-963e-9beed753a35d)
 
 ---
 
