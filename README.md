@@ -1,4 +1,4 @@
-# Medi-Verify: Counterfeit Drug Detection
+# 🛡️ Medi-Verify: Counterfeit Drug Detection
 
 <p align="center">
   <strong>A decentralized web application leveraging the Internet Computer blockchain to combat counterfeit drugs and ensure pharmaceutical supply chain integrity.</strong>
@@ -28,6 +28,27 @@ Counterfeit medicines pose a significant and life-threatening risk to global hea
 * **Unique Blockchain Hash**
 
 This process ensures that every stakeholder—from the manufacturer to the end consumer—can trust the legitimacy of the medicine, enhancing patient safety and building confidence in the pharmaceutical ecosystem.
+
+---
+
+## ⚙️ How It Works
+
+The Medi-Verify ecosystem operates in a clear, sequential flow that ensures integrity at every step of the supply chain.
+
+### 1. Manufacturer Registration
+* **Action:** A pharmaceutical manufacturer registers a new batch of medicine through the dedicated portal.
+* **Process:** Product details (name, batch number, expiry date) are submitted.
+* **Outcome:** A new, immutable record is created in the ICP canister, generating a unique QR code/ID for the batch.
+
+### 2. Supply Chain Transfer
+* **Action:** The manufacturer sells or transfers the medicine batch to a registered seller (distributor/pharmacy).
+* **Process:** The ownership transfer is recorded on the blockchain, updating the product's journey.
+* **Outcome:** The transaction is logged, providing a transparent and auditable trail of custody.
+
+### 3. Consumer Verification
+* **Action:** A consumer, pharmacist, or hospital scans the QR code on the medicine package using the Medi-Verify dashboard.
+* **Process:** The application queries the ICP canister using the unique product ID.
+* **Outcome:** The dashboard displays the full, verified history of the product. If the details match the on-chain record, it is marked as **"Authentic."** If not, it is flagged, preventing a potential counterfeit from being used.
 
 ---
 
@@ -82,13 +103,16 @@ A look at the backend components that power Medi-Verify's secure and decentraliz
 
 ## 🛠️ Tech Stack
 
-| Layer       | Technology                    |
-| ----------- | ----------------------------- |
-| **Frontend** | React, Vite, Tailwind CSS     |
-| **Backend/API** | FastAPI                       |
-| **Blockchain** | ICP Canister (StableBTreeMap) |
-| **Storage** | On-chain in stable memory     |
-| **Others** | RFID/QR emulation, Lucide Icons |
+### Frontend (Web Dashboard)
+* **Framework:** `React.js` + `Vite`
+* **Styling:** `Tailwind CSS`
+* **UI Components:** `Lucide Icons`
+
+### Backend (Smart Contract & API)
+* **Blockchain:** `Internet Computer (ICP)`
+* **Language:** `Rust` or `Motoko` for the canister logic.
+* **Data Structure:** `StableBTreeMap` for persistent, stable memory storage on-chain.
+* **API Server:** `FastAPI` (Python) to serve as a bridge or for off-chain logic.
 
 ---
 
@@ -162,10 +186,25 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ---
 
+## 📄 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+---
+
 ## 🧑‍💻 Project Team
 
-This project was brought to you by **Team X Rankers**:
+This project was brought to you by **Team X Rankers**. The project was planned and primarily built by the team lead, with key contributions from all members.
 
-* **Pranav Marwaha** (Team Leader) - [Pranav-Marwaha-73](https://github.com/Pranav-Marwaha-73)
-* **Tarandeep Singh**
-* **Hargun Kaur**
+### Pranav Marwaha (Team Leader)
+- **Role:** Lead Developer (Blockchain & Frontend)
+- **GitHub:** [Pranav-Marwaha-73](https://github.com/Pranav-Marwaha-73)
+- **Contact:** `pranavmarwaha73@gmail.com`
+
+### Tarandeep Singh
+- **Role:** QR/Barcode Scanning Integration
+- **Contact:** `taran3366@gmail.com`
+
+### Hargun Kaur
+- **Role:** Backend Development (FastAPI)
+- **Contact:** ``
