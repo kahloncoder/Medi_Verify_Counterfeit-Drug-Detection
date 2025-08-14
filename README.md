@@ -207,4 +207,4 @@ This project was brought to you by **Team X Rankers**. The project was planned a
 
 ### Hargun Kaur
 - **Role:** Backend Development (FastAPI)
-- **Contact:** ``
+- **Contact:** `hargun0056@gmail.com`
