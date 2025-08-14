@@ -1,0 +1,24 @@
+type Medicine = record {
+    name: text;
+    manufacturer: text;
+    batch_number: text;
+    manufacturing_date: text;
+    expiry: text;
+    blockchain_hash: text;
+    last_updated: text;
+};
+
+service : {
+    add_medicine: (
+        text,  // id
+        text,  // name
+        text,  // manufacturer
+        text,  // batch_number
+        text,  // manufacturing_date
+        text   // expiry
+    ) -> ();
+    get_medicine: (text) -> (opt Medicine) query;
+    get_all_medicines: () -> (vec record { text; Medicine }) query;
+    get_medicine_count: () -> (nat64) query;
+    delete_medicine: (text) -> (bool);
+}
