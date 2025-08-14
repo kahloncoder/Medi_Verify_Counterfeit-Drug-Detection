@@ -201,10 +201,10 @@ This project was brought to you by **Team X Rankers**. The project was planned a
 - **GitHub:** [Pranav-Marwaha-73](https://github.com/Pranav-Marwaha-73)
 - **Contact:** `pranavmarwaha73@gmail.com`
 
-### Tarandeep Singh
+### Tarandeep Singh (Senior Developer)
 - **Role:** QR/Barcode Scanning Integration
 - **Contact:** `taran3366@gmail.com`
 
-### Hargun Kaur
+### Hargun Kaur (Junior Developer)
 - **Role:** Backend Development (FastAPI)
 - **Contact:** `hargun0056@gmail.com`
