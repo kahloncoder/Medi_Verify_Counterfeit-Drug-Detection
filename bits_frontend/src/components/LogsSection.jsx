@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Filter, Download, Calendar } from 'lucide-react';
+import { Filter, Download, Calendar, Eye, EyeOff } from 'lucide-react';
 import { formatDate, formatDateTime, formatDateString, getStatusClass, getStatusText } from '../utils/helpers';
 
 const LogsSection = ({ transactionLogs = [], showAlert }) => {
   const [dateFilter, setDateFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [filteredLogs, setFilteredLogs] = useState(transactionLogs);
+  const [expandedRows, setExpandedRows] = useState(new Set());
 
   useEffect(() => {
     setFilteredLogs(transactionLogs);
@@ -22,7 +23,7 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
 
     if (statusFilter) {
       filtered = filtered.filter(log =>
-        getStatusText(log?.expiryDate).toLowerCase() === statusFilter.toLowerCase()
+        (log?.status === 'counterfeit' ? 'counterfeit' : getStatusText(log?.expiryDate)).toLowerCase() === statusFilter.toLowerCase()
       );
     }
 
@@ -37,14 +38,17 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
     }
 
     const csvContent = [
-      ['Timestamp', 'Medicine ID', 'Medicine Name', 'Status', 'Manufacturer', 'Expiry Date', 'User'],
+      ['Timestamp', 'Medicine ID', 'Medicine Name', 'Status', 'Manufacturer', 'Batch Number', 'Manufacturing Date', 'Expiry Date', 'Blockchain Hash', 'User'],
       ...transactionLogs.map(log => [
         formatDateTime(log?.timestamp),
         log?.medicineId ?? 'N/A',
         log?.medicineName ?? 'N/A',
-        getStatusText(log?.expiryDate),
+        log?.status === 'counterfeit' ? 'Counterfeit' : getStatusText(log?.expiryDate),
         log?.manufacturer ?? 'N/A',
+        log?.batchNumber ?? 'N/A',
+        formatDateString(log?.manufacturingDate),
         formatDateString(log?.expiryDate),
+        log?.verificationHash ?? 'N/A',
         log?.user ?? 'Unknown'
       ])
     ].map(row => row.join(',')).join('\n');
@@ -60,6 +64,16 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
     URL.revokeObjectURL(url);
 
     showAlert?.('Logs exported successfully', 'success');
+  };
+
+  const toggleRowExpansion = (logId) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(logId)) {
+      newExpanded.delete(logId);
+    } else {
+      newExpanded.add(logId);
+    }
+    setExpandedRows(newExpanded);
   };
 
   const displayLogs = filteredLogs.length > 0 ? filteredLogs : transactionLogs;
@@ -88,6 +102,7 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
             <option value="">All Status</option>
             <option value="authentic">Authentic</option>
             <option value="expired">Expired</option>
+            <option value="counterfeit">Counterfeit</option>
           </select>
 
           <button className="btn secondary" onClick={filterLogs}>
@@ -105,12 +120,12 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
           <table className="logs-table">
             <thead>
               <tr>
+                <th>Actions</th>
                 <th>Timestamp</th>
                 <th>Medicine ID</th>
                 <th>Medicine Name</th>
                 <th>Status</th>
                 <th>Manufacturer</th>
-                <th>Expiry Date</th>
                 <th>User</th>
               </tr>
             </thead>
@@ -123,19 +138,62 @@ const LogsSection = ({ transactionLogs = [], showAlert }) => {
                 </tr>
               ) : (
                 displayLogs.map((log, index) => (
-                  <tr key={log?.id || index}>
-                    <td>{formatDateTime(log?.timestamp)}</td>
-                    <td>{log?.medicineId ?? 'N/A'}</td>
-                    <td>{log?.medicineName ?? 'N/A'}</td>
-                    <td>
-                      <span className={`status-badge status-${getStatusClass(log?.expiryDate)}`}>
-                        {getStatusText(log?.expiryDate)}
-                      </span>
-                    </td>
-                    <td>{log?.manufacturer ?? 'N/A'}</td>
-                    <td>{formatDateString(log?.expiryDate)}</td>
-                    <td>{log?.user ?? 'Unknown'}</td>
-                  </tr>
+                  <React.Fragment key={log?.id || index}>
+                    <tr className="log-row">
+                      <td>
+                        <button 
+                          className="expand-btn"
+                          onClick={() => toggleRowExpansion(log?.id || index)}
+                        >
+                          {expandedRows.has(log?.id || index) ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </td>
+                      <td>{formatDateTime(log?.timestamp)}</td>
+                      <td className="medicine-id">{log?.medicineId ?? 'N/A'}</td>
+                      <td>{log?.medicineName ?? 'N/A'}</td>
+                      <td>
+                        <span className={`status-badge status-${log?.status === 'counterfeit' ? 'counterfeit' : getStatusClass(log?.expiryDate)}`}>
+                          {log?.status === 'counterfeit' ? 'Counterfeit' : getStatusText(log?.expiryDate)}
+                        </span>
+                      </td>
+                      <td>{log?.manufacturer ?? 'N/A'}</td>
+                      <td>{log?.user ?? 'Unknown'}</td>
+                    </tr>
+                    {expandedRows.has(log?.id || index) && (
+                      <tr className="expanded-row">
+                        <td colSpan="7">
+                          <div className="expanded-details">
+                            <div className="detail-grid">
+                              <div className="detail-item">
+                                <span className="detail-label">Batch Number</span>
+                                <span className="detail-value">{log?.batchNumber ?? 'N/A'}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Manufacturing Date</span>
+                                <span className="detail-value">{formatDateString(log?.manufacturingDate)}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Expiry Date</span>
+                                <span className="detail-value">{formatDateString(log?.expiryDate)}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Blockchain Hash</span>
+                                <span className="detail-value blockchain-hash">{log?.verificationHash ?? 'N/A'}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Transaction ID</span>
+                                <span className="detail-value">{log?.id ?? 'N/A'}</span>
+                              </div>
+                              <div className="detail-item">
+                                <span className="detail-label">Verification Time</span>
+                                <span className="detail-value">{formatDateTime(log?.timestamp)}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))
               )}
             </tbody>

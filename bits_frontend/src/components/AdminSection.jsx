@@ -7,9 +7,13 @@ const AdminSection = ({ transactionLogs = [], onClearLogs, setIsLoading, showAle
   // Compute stats dynamically from expiryDate
   const stats = {
     total: transactionLogs.length,
-    authentic: transactionLogs.filter(log => getStatusClass(log.expiryDate) === 'authentic').length,
-    expired: transactionLogs.filter(log => getStatusClass(log.expiryDate) === 'expired').length,
-    counterfeit: transactionLogs.filter(log => getStatusClass(log.expiryDate) === 'counterfeit').length // likely 0 unless you add counterfeit logic
+    authentic: transactionLogs.filter(log => 
+      log.status !== 'counterfeit' && getStatusClass(log.expiryDate) === 'authentic'
+    ).length,
+    expired: transactionLogs.filter(log => 
+      log.status !== 'counterfeit' && getStatusClass(log.expiryDate) === 'expired'
+    ).length,
+    counterfeit: transactionLogs.filter(log => log.status === 'counterfeit').length
   };
 
   const syncBlockchain = () => {
@@ -33,7 +37,7 @@ SUMMARY STATISTICS:
 
 DETAILED LOGS:
 ${transactionLogs.map(log => 
-  `${new Date(log.timestamp).toLocaleString()} - ${log.medicineName} (${log.medicineId}) - ${getStatusClass(log.expiryDate).toUpperCase()}`
+  `${new Date(log.timestamp).toLocaleString()} - ${log.medicineName} (${log.medicineId}) - ${log.status === 'counterfeit' ? 'COUNTERFEIT' : getStatusClass(log.expiryDate).toUpperCase()}`
 ).join('\n')}`;
 
     const blob = new Blob([reportContent], { type: 'text/plain' });

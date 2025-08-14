@@ -17,8 +17,13 @@ const VerifySection = ({ verificationResult }) => {
     );
   }
 
-  // Determine status from expiryDate
-  const status = getStatusClass(verificationResult.expiryDate);
+  // Determine status - check for counterfeit first, then expiry date
+  let status;
+  if (verificationResult.status === "Counterfeit") {
+    status = 'counterfeit';
+  } else {
+    status = getStatusClass(verificationResult.expiryDate);
+  }
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -40,7 +45,7 @@ const VerifySection = ({ verificationResult }) => {
             <div className="medicine-name">{verificationResult.name}</div>
             <div className={`status-badge status-${status}`}>
               {getStatusIcon(status)}
-              {getStatusText(verificationResult.expiryDate)}
+              {status === 'counterfeit' ? "COUNTERFEIT" : getStatusText(verificationResult.expiryDate)}
             </div>
           </div>
           <div className="verification-details">

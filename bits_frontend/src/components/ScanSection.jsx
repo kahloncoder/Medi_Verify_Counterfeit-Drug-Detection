@@ -44,7 +44,22 @@ const ScanSection = ({ onVerificationComplete, setIsLoading, showAlert }) => {
       console.log("[ScanSection] med:", med);
 
       if (!med.found) {
-        showAlert(`Medicine with ID ${medicineId} not found in database or may be Counterfeit`, "error");
+        // Create counterfeit entry for logging
+        const counterfeitResult = {
+          found: false,
+          id: medicineId,
+          name: "Unknown Medicine",
+          manufacturer: "Unknown",
+          batchNumber: "Unknown",
+          manufacturingDate: "Unknown",
+          expiryDate: "Unknown",
+          blockchainHash: "N/A",
+          lastUpdated: new Date().toISOString(),
+          status: "Counterfeit"
+        };
+        
+        onVerificationComplete(counterfeitResult);
+        showAlert(`Medicine with ID ${medicineId} not found in database - Marked as Counterfeit`, "error");
         return;
       }
 

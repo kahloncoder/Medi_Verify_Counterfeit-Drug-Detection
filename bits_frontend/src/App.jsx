@@ -40,11 +40,13 @@ function App() {
   const addTransactionLog = (result) => {
     const transaction = {
       id: `TXN${Date.now().toString(36).toUpperCase()}`,
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now(),
       medicineId: result.id,
       medicineName: result.name,
-      status: result.status,
+      status: result.status === "Counterfeit" ? "counterfeit" : result.status,
       manufacturer: result.manufacturer,
+      batchNumber: result.batchNumber,
+      manufacturingDate: result.manufacturingDate,
       expiryDate: result.expiryDate,
       user: 'Current User',
       verificationHash: result.blockchainHash

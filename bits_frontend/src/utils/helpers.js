@@ -4,6 +4,11 @@
 const parseDateValue = (value) => {
   if (!value) return null;
 
+  // Handle timestamp numbers (milliseconds since epoch)
+  if (typeof value === 'number') {
+    return new Date(value);
+  }
+
   const str = value.toString().trim();
 
   // MM/YYYY → convert to first day of month
