@@ -205,6 +205,6 @@ This project was brought to you by **Team X Rankers**. The project was planned a
 - **Role:** QR/Barcode Scanning Integration
 - **Contact:** `taran3366@gmail.com`
 
-### Hargun Kaur (Junior Developer)
+### Rishipal Singh ( Developer)
 - **Role:** Backend Development (FastAPI)
-- **Contact:** `hargun0056@gmail.com`
+- **Contact:** `rishipal@gmail.com`
